@@ -1,0 +1,3 @@
+table:
+  name: xref_ticket_tag
+  schema: public
