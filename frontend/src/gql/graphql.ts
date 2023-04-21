@@ -150,7 +150,7 @@ export type Mutation_RootDelete_Xref_Ticket_TagArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Xref_Ticket_Tag_By_PkArgs = {
-  tag_value: Tags_Enum;
+  tag_value: Scalars['String'];
   ticket_id: Scalars['uuid'];
 };
 
@@ -360,7 +360,7 @@ export type Query_RootXref_Ticket_Tag_AggregateArgs = {
 
 
 export type Query_RootXref_Ticket_Tag_By_PkArgs = {
-  tag_value: Tags_Enum;
+  tag_value: Scalars['String'];
   ticket_id: Scalars['uuid'];
 };
 
@@ -472,7 +472,7 @@ export type Subscription_RootXref_Ticket_Tag_AggregateArgs = {
 
 
 export type Subscription_RootXref_Ticket_Tag_By_PkArgs = {
-  tag_value: Tags_Enum;
+  tag_value: Scalars['String'];
   ticket_id: Scalars['uuid'];
 };
 
@@ -488,30 +488,6 @@ export type Tags = {
   __typename?: 'tags';
   comment: Scalars['String'];
   value: Scalars['String'];
-  /** An array relationship */
-  xref_ticket_tags: Array<Xref_Ticket_Tag>;
-  /** An aggregate relationship */
-  xref_ticket_tags_aggregate: Xref_Ticket_Tag_Aggregate;
-};
-
-
-/** columns and relationships of "tags" */
-export type TagsXref_Ticket_TagsArgs = {
-  distinct_on?: InputMaybe<Array<Xref_Ticket_Tag_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Xref_Ticket_Tag_Order_By>>;
-  where?: InputMaybe<Xref_Ticket_Tag_Bool_Exp>;
-};
-
-
-/** columns and relationships of "tags" */
-export type TagsXref_Ticket_Tags_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Xref_Ticket_Tag_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Xref_Ticket_Tag_Order_By>>;
-  where?: InputMaybe<Xref_Ticket_Tag_Bool_Exp>;
 };
 
 /** aggregated selection of "tags" */
@@ -543,8 +519,6 @@ export type Tags_Bool_Exp = {
   _or?: InputMaybe<Array<Tags_Bool_Exp>>;
   comment?: InputMaybe<String_Comparison_Exp>;
   value?: InputMaybe<String_Comparison_Exp>;
-  xref_ticket_tags?: InputMaybe<Xref_Ticket_Tag_Bool_Exp>;
-  xref_ticket_tags_aggregate?: InputMaybe<Xref_Ticket_Tag_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "tags" */
@@ -553,31 +527,10 @@ export enum Tags_Constraint {
   TagsPkey = 'tags_pkey'
 }
 
-export enum Tags_Enum {
-  /** Backlog */
-  Backlog = 'backlog',
-  /** Closed */
-  Closed = 'closed',
-  /** Halted */
-  Halted = 'halted',
-  /** In Progress */
-  InProgress = 'in_progress'
-}
-
-/** Boolean expression to compare columns of type "tags_enum". All fields are combined with logical 'AND'. */
-export type Tags_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Tags_Enum>;
-  _in?: InputMaybe<Array<Tags_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Tags_Enum>;
-  _nin?: InputMaybe<Array<Tags_Enum>>;
-};
-
 /** input type for inserting data into table "tags" */
 export type Tags_Insert_Input = {
   comment?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['String']>;
-  xref_ticket_tags?: InputMaybe<Xref_Ticket_Tag_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -621,7 +574,6 @@ export type Tags_On_Conflict = {
 export type Tags_Order_By = {
   comment?: InputMaybe<Order_By>;
   value?: InputMaybe<Order_By>;
-  xref_ticket_tags_aggregate?: InputMaybe<Xref_Ticket_Tag_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: tags */
@@ -908,7 +860,7 @@ export type Xref_Ticket_Tag = {
   __typename?: 'xref_ticket_tag';
   /** An object relationship */
   tag: Tags;
-  tag_value: Tags_Enum;
+  tag_value: Scalars['String'];
   /** An object relationship */
   ticket: Tickets;
   ticket_id: Scalars['uuid'];
@@ -967,7 +919,7 @@ export type Xref_Ticket_Tag_Bool_Exp = {
   _not?: InputMaybe<Xref_Ticket_Tag_Bool_Exp>;
   _or?: InputMaybe<Array<Xref_Ticket_Tag_Bool_Exp>>;
   tag?: InputMaybe<Tags_Bool_Exp>;
-  tag_value?: InputMaybe<Tags_Enum_Comparison_Exp>;
+  tag_value?: InputMaybe<String_Comparison_Exp>;
   ticket?: InputMaybe<Tickets_Bool_Exp>;
   ticket_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -981,7 +933,7 @@ export enum Xref_Ticket_Tag_Constraint {
 /** input type for inserting data into table "xref_ticket_tag" */
 export type Xref_Ticket_Tag_Insert_Input = {
   tag?: InputMaybe<Tags_Obj_Rel_Insert_Input>;
-  tag_value?: InputMaybe<Tags_Enum>;
+  tag_value?: InputMaybe<Scalars['String']>;
   ticket?: InputMaybe<Tickets_Obj_Rel_Insert_Input>;
   ticket_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -989,22 +941,26 @@ export type Xref_Ticket_Tag_Insert_Input = {
 /** aggregate max on columns */
 export type Xref_Ticket_Tag_Max_Fields = {
   __typename?: 'xref_ticket_tag_max_fields';
+  tag_value?: Maybe<Scalars['String']>;
   ticket_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by max() on columns of table "xref_ticket_tag" */
 export type Xref_Ticket_Tag_Max_Order_By = {
+  tag_value?: InputMaybe<Order_By>;
   ticket_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Xref_Ticket_Tag_Min_Fields = {
   __typename?: 'xref_ticket_tag_min_fields';
+  tag_value?: Maybe<Scalars['String']>;
   ticket_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by min() on columns of table "xref_ticket_tag" */
 export type Xref_Ticket_Tag_Min_Order_By = {
+  tag_value?: InputMaybe<Order_By>;
   ticket_id?: InputMaybe<Order_By>;
 };
 
@@ -1034,7 +990,7 @@ export type Xref_Ticket_Tag_Order_By = {
 
 /** primary key columns input for table: xref_ticket_tag */
 export type Xref_Ticket_Tag_Pk_Columns_Input = {
-  tag_value: Tags_Enum;
+  tag_value: Scalars['String'];
   ticket_id: Scalars['uuid'];
 };
 
@@ -1048,7 +1004,7 @@ export enum Xref_Ticket_Tag_Select_Column {
 
 /** input type for updating data in table "xref_ticket_tag" */
 export type Xref_Ticket_Tag_Set_Input = {
-  tag_value?: InputMaybe<Tags_Enum>;
+  tag_value?: InputMaybe<Scalars['String']>;
   ticket_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -1062,7 +1018,7 @@ export type Xref_Ticket_Tag_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Xref_Ticket_Tag_Stream_Cursor_Value_Input = {
-  tag_value?: InputMaybe<Tags_Enum>;
+  tag_value?: InputMaybe<Scalars['String']>;
   ticket_id?: InputMaybe<Scalars['uuid']>;
 };
 

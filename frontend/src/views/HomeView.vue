@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { graphql } from '@/gql'
-import { Tags_Enum } from '@/gql/graphql'
 import { useQuery } from '@urql/vue'
 import { computed, ref } from 'vue'
 
@@ -8,7 +7,7 @@ defineProps<{
   msg: string
 }>()
 
-const selectedTag = ref(Tags_Enum.Backlog)
+const selectedTag = ref('')
 
 const tagsQuery = useQuery({
   query: graphql(/* GraphQL */ `
@@ -62,10 +61,12 @@ const ticketsQuery = useQuery({
     </select>
     <ul>
       <li v-for="ticket in ticketsQuery.data?.value?.tickets" :key="ticket.ticket_id">
-        {{ ticket.name }}
-        <h4 v-for="xrefTag in ticket.xref_ticket_tags" :key="xrefTag.tag.value">
-          {{ xrefTag.tag.comment }}
-        </h4>
+        {{ ticket.name }}: <span style="font-size: 0.75em">{{ ticket.description }}</span>
+        <ul>
+          <li v-for="xrefTag in ticket.xref_ticket_tags" :key="xrefTag.tag.value">
+            {{ xrefTag.tag.comment }}
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

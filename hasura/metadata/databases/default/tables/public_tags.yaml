@@ -1,3 +1,4 @@
 table:
   name: tags
   schema: public
+is_enum: true

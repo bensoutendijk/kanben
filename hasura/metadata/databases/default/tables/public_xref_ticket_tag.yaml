@@ -1,3 +1,10 @@
 table:
   name: xref_ticket_tag
   schema: public
+object_relationships:
+  - name: tag
+    using:
+      foreign_key_constraint_on: tag_value
+  - name: ticket
+    using:
+      foreign_key_constraint_on: ticket_id
