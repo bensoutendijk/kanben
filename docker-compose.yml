@@ -9,7 +9,21 @@ services:
     volumes:
       - ./frontend:/app
     working_dir: /app
-    command: bash -c "yarn install && yarn dev & yarn generate"
+    environment:
+      HASURA_GRAPHQL_ENGINE_URL: ${HASURA_GRAPHQL_ENGINE_URL}
+    command: bash -c "yarn install && yarn dev"
+  codegen:
+    image: node:16
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    environment:
+      HASURA_GRAPHQL_ENGINE_URL: ${HASURA_GRAPHQL_ENGINE_URL}
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+    command: bash -c "yarn generate"
+    depends_on:
+      - frontend
+      - graphql-engine
   postgres:
     image: postgres:12
     restart: always
@@ -17,6 +31,15 @@ services:
     - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
+  tunnel:
+    image: node:16
+    command: >
+      npx localtunnel
+      --local-host frontend 
+      -p 3000
+      -s kanben-web
+    depends_on:
+      - frontend
   graphql-engine:
     image: hasura/graphql-engine:v2.22.1.cli-migrations-v3
     ports:
@@ -40,10 +63,7 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_MIGRATIONS_DIR: /hasura/migrations
       HASURA_GRAPHQL_METADATA_DIR: /hasura/metadata
-      ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
-      # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
-      ## uncomment next line to set an admin secret
-      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
 volumes:
   db_data:
 

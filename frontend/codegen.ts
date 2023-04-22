@@ -1,9 +1,19 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
 
-console.log('starting codegen')
+const {
+  HASURA_GRAPHQL_ENGINE_URL = 'https://localhost:8080/v1/graphql',
+  HASURA_GRAPHQL_ADMIN_SECRET = 'foo'
+} = process.env
 
 const config: CodegenConfig = {
-  schema: 'http://graphql-engine:8080/v1/graphql',
+  schema: {
+    [HASURA_GRAPHQL_ENGINE_URL]: {
+      headers: {
+        'x-hasura-admin-secret': HASURA_GRAPHQL_ADMIN_SECRET
+      }
+    }
+  },
+  errorsOnly: true,
   documents: ['src/**/*.vue'],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
