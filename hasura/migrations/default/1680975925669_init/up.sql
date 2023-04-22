@@ -1,8 +1,17 @@
 SET check_function_bodies = false;
+
 CREATE TABLE public.tags (
     value text NOT NULL,
     comment text NOT NULL
 );
+
+INSERT INTO public.tags (value, comment) VALUES
+    ('backlog', 'Backlog'),
+    ('in_progress', 'In Progress'),
+    ('code_review', 'Code Review'),
+    ('completed', 'Completed'),
+    ('closed', 'Closed');
+
 CREATE TABLE public.tickets (
     ticket_id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     name text NOT NULL,

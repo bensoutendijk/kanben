@@ -5,12 +5,15 @@ services:
       dockerfile: ./docker/frontend.dockerfile
       target: development
     ports:
-      - "3000:3000"
+      - 3000:3000
+      - 3001:3001
     volumes:
       - ./frontend:/app
     working_dir: /app
     environment:
       HASURA_GRAPHQL_ENGINE_URL: ${HASURA_GRAPHQL_ENGINE_URL}
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
     command: bash -c "yarn install && yarn dev"
   codegen:
     image: node:16
@@ -64,6 +67,7 @@ services:
       HASURA_GRAPHQL_MIGRATIONS_DIR: /hasura/migrations
       HASURA_GRAPHQL_METADATA_DIR: /hasura/metadata
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+      HASURA_GRAPHQL_JWT_SECRET: ${HASURA_GRAPHQL_JWT_SECRET}
 volumes:
   db_data:
 

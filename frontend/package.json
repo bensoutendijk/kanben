@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "generate": "graphql-codegen --watch",
-    "build": "run-p type-check build-only",
+    "build": "npm run type-check && npm run build-only",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
@@ -13,7 +13,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@auth0/auth0-vue": "^2.2.0",
     "@urql/vue": "^1.1.0",
+    "@vueuse/core": "^10.0.2",
     "graphql": "^16.6.0",
     "urql": "^4.0.0",
     "vue": "^3.2.47",
@@ -36,6 +38,7 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "vite": "^4.1.4",
+    "vite-plugin-pwa": "^0.14.7",
     "vue-tsc": "^1.2.0"
   }
 }

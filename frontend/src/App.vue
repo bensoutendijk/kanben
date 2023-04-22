@@ -1,16 +1,28 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import { provideClient } from '@urql/vue'
-import { client } from './client'
+import { RouterLink, RouterView } from "vue-router";
+import { provideClient } from "@urql/vue";
 
-provideClient(client)
+import { client } from "./client";
+
+import LoginButton from "@/components/LoginButton.vue";
+import LogoutButton from "./components/LogoutButton.vue";
+import { useAuth } from "./composables/useAuth";
+
+const { user } = useAuth();
+
+provideClient(client);
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <pre>
+      {{ user }}
+    </pre>
     <div class="wrapper">
       <nav>
+        <LoginButton v-if="!user" />
+        <LogoutButton v-else />
         <RouterLink to="/">Home</RouterLink>
       </nav>
     </div>

@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { graphql } from '@/gql'
-import { useQuery } from '@urql/vue'
-import { computed, ref } from 'vue'
+import type { Tags_Enum } from "@/gql/graphql";
+
+import { computed, ref } from "vue";
+import { graphql } from "@/gql";
+import { useQuery } from "@urql/vue";
 
 defineProps<{
-  msg: string
-}>()
+  msg: string;
+}>();
 
-const selectedTag = ref('')
+const selectedTag = ref<Tags_Enum>();
 
 const tagsQuery = useQuery({
   query: graphql(/* GraphQL */ `
@@ -18,7 +20,7 @@ const tagsQuery = useQuery({
       }
     }
   `)
-})
+});
 
 const ticketsQuery = useQuery({
   query: graphql(/* GraphQL */ `
@@ -47,7 +49,7 @@ const ticketsQuery = useQuery({
       }
     }
   }))
-})
+});
 </script>
 
 <template>
