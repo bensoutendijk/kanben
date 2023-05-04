@@ -9,3 +9,13 @@ array_relationships:
         table:
           name: xref_ticket_tag
           schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - description
+        - name
+        - created_at
+        - updated_at
+        - ticket_id
+      filter: {}

@@ -1,8 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["codegen.ts", "vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*"],
+  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*"],
   "compilerOptions": {
     "composite": true,
-    "types": ["node"]
+    "types": ["node"],
+    "ignoreDeprecations": "5.0"
   }
 }

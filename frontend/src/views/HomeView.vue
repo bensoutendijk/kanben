@@ -5,10 +5,6 @@ import { computed, ref } from "vue";
 import { graphql } from "@/gql";
 import { useQuery } from "@urql/vue";
 
-defineProps<{
-  msg: string;
-}>();
-
 const selectedTag = ref<Tags_Enum>();
 
 const tagsQuery = useQuery({
@@ -54,7 +50,6 @@ const ticketsQuery = useQuery({
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
     <select v-model="selectedTag">
       <option disabled value="">Please select one</option>
       <option v-for="tag in tagsQuery.data?.value?.tags" :key="tag.value" :value="tag.value">
@@ -91,6 +86,7 @@ h3 {
 }
 
 @media (min-width: 1024px) {
+
   .greetings h1,
   .greetings h3 {
     text-align: left;

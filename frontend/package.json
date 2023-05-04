@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "predev": "yarn install",
     "dev": "vite",
     "generate": "graphql-codegen --watch",
     "build": "npm run type-check && npm run build-only",
@@ -14,12 +15,15 @@
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.2.0",
+    "@urql/exchange-auth": "^2.1.2",
     "@urql/vue": "^1.1.0",
     "@vueuse/core": "^10.0.2",
     "graphql": "^16.6.0",
-    "urql": "^4.0.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
+  },
+  "resolutions": {
+    "**/@urql/core": "4.0.7"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^3.3.0",
@@ -27,7 +31,7 @@
     "@graphql-codegen/introspection": "^3.0.1",
     "@graphql-codegen/typescript": "^3.0.3",
     "@rushstack/eslint-patch": "^1.2.0",
-    "@types/node": "^18.15.13",
+    "@types/node": "^18.16.3",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",

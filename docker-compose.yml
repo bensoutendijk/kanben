@@ -1,37 +1,54 @@
 services:
+  express:
+    build:
+      context: .
+      dockerfile: ./docker/express.dockerfile
+    volumes:
+      - ./express:/app
+    working_dir: /app
+    environment:
+      PORT: ${EXPRESS_PORT}
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      AUTH0_CLIENT_ID: ${AUTH0_EXPRESS_CLIENT_ID}
+      AUTH0_CLIENT_SECRET: ${AUTH0_EXPRESS_CLIENT_SECRET}
+    ports:
+      - ${EXPRESS_PORT}:${EXPRESS_PORT}
+    command: yarn start
   frontend:
-    build: 
+    build:
       context: .
       dockerfile: ./docker/frontend.dockerfile
       target: development
     ports:
-      - 3000:3000
-      - 3001:3001
+      - ${VITE_SERVER_PORT}:${VITE_SERVER_PORT}
+      - ${VITE_PREVIEW_PORT}:${VITE_PREVIEW_PORT}
     volumes:
       - ./frontend:/app
     working_dir: /app
     environment:
-      HASURA_GRAPHQL_ENGINE_URL: ${HASURA_GRAPHQL_ENGINE_URL}
+      GRAPHQL_ENGINE_URL: http://${GRAPHQL_ENGINE_HOST}:${GRAPHQL_ENGINE_PORT}${GRAPHQL_ENGINE_PATH}
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
-      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
-    command: bash -c "yarn install && yarn dev"
+      AUTH0_KANBEN_CLIENT_ID: ${AUTH0_KANBEN_CLIENT_ID}
+    command: yarn dev
   codegen:
-    image: node:16
+    build:
+      context: .
+      dockerfile: ./docker/codegen.dockerfile
     volumes:
       - ./frontend:/app
     working_dir: /app
     environment:
-      HASURA_GRAPHQL_ENGINE_URL: ${HASURA_GRAPHQL_ENGINE_URL}
+      GRAPHQL_ENGINE_URL: http://${GRAPHQL_ENGINE_HOST}:${GRAPHQL_ENGINE_PORT}${GRAPHQL_ENGINE_PATH}
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
-    command: bash -c "yarn generate"
+    command: yarn generate
     depends_on:
       - frontend
-      - graphql-engine
+      - hasura
   postgres:
     image: postgres:12
-    restart: always
+    restart: unless-stopped
     volumes:
-    - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
   tunnel:
@@ -43,19 +60,21 @@ services:
       -s kanben-web
     depends_on:
       - frontend
-  graphql-engine:
-    image: hasura/graphql-engine:v2.22.1.cli-migrations-v3
+  hasura:
+    build:
+      context: .
+      dockerfile: ./docker/hasura.dockerfile
     ports:
-    - "8080:8080"
+      - "8080:8080"
     working_dir: /hasura
     volumes:
-    - ./hasura:/hasura
+      - ./hasura:/hasura
     depends_on:
-    - "postgres"
-    restart: always
+      - "postgres"
+    restart: unless-stopped
     environment:
       ## postgres database to store Hasura metadata
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: ${POSTGRES_DATABASE_URL}
       ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
       PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/default
       ## enable the console served by server
@@ -70,4 +89,3 @@ services:
       HASURA_GRAPHQL_JWT_SECRET: ${HASURA_GRAPHQL_JWT_SECRET}
 volumes:
   db_data:
-

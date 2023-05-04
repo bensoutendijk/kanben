@@ -4,6 +4,8 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { VitePWA } from "vite-plugin-pwa";
 
+const { VITE_SERVER_PORT = "3000", VITE_PREVIEW_PORT = "3001" } = process.env;
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -26,12 +28,12 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000,
+    port: parseInt(VITE_SERVER_PORT),
     host: "0.0.0.0",
     cors: true
   },
   preview: {
-    port: 3001,
+    port: parseInt(VITE_PREVIEW_PORT),
     host: "0.0.0.0",
     cors: true
   }
