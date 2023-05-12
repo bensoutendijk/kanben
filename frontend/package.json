@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "predev": "yarn install",
     "dev": "vite",
     "generate": "graphql-codegen --watch",
     "build": "npm run type-check && npm run build-only",
@@ -15,10 +14,12 @@
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.2.0",
+    "@inkline/inkline": "^4.0.0-rc.30",
     "@urql/exchange-auth": "^2.1.2",
     "@urql/vue": "^1.1.0",
     "@vueuse/core": "^10.0.2",
     "graphql": "^16.6.0",
+    "sass": "^1.62.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

@@ -13,7 +13,7 @@ services:
       AUTH0_CLIENT_SECRET: ${AUTH0_EXPRESS_CLIENT_SECRET}
     ports:
       - ${EXPRESS_PORT}:${EXPRESS_PORT}
-    command: yarn start
+    command: sh -c 'npm install && npm run start'
   frontend:
     build:
       context: .
@@ -29,7 +29,7 @@ services:
       GRAPHQL_ENGINE_URL: http://${GRAPHQL_ENGINE_HOST}:${GRAPHQL_ENGINE_PORT}${GRAPHQL_ENGINE_PATH}
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AUTH0_KANBEN_CLIENT_ID: ${AUTH0_KANBEN_CLIENT_ID}
-    command: yarn dev
+    command: sh -c 'npm install && npm run dev'
   codegen:
     build:
       context: .
@@ -40,7 +40,7 @@ services:
     environment:
       GRAPHQL_ENGINE_URL: http://${GRAPHQL_ENGINE_HOST}:${GRAPHQL_ENGINE_PORT}${GRAPHQL_ENGINE_PATH}
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
-    command: yarn generate
+    command: sh -c 'npm install && npm run generate'
     depends_on:
       - frontend
       - hasura

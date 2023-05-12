@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "yarn install && yarn build",
-    "start": "concurrently 'yarn build --w' 'nodemon --watch dist ./dist/index.js'",
+    "prestart": "npm run build",
+    "start": "concurrently 'npm run build --w' 'nodemon --watch dist ./dist/index.js'",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
