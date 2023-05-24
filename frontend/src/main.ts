@@ -8,8 +8,9 @@ import "./css/variables/index.scss";
 import "@inkline/inkline/css/index.scss";
 import "@inkline/inkline/css/utilities.scss";
 
-const app = createApp(App).use(Inkline, { components });
+const app = createApp(App);
 
+app.use(Inkline, { components });
 app.use(router);
 app.use(auth0);
 

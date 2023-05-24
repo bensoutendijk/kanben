@@ -16,7 +16,11 @@ const { VITE_SERVER_PORT = "3000", VITE_PREVIEW_PORT = "3001" } = process.env;
 export default defineConfig({
   plugins: [
     inkline(inklineConfig),
-    vue(),
+    vue({
+      script: {
+        propsDestructure: true
+      }
+    }),
     VitePWA({
       registerType: "autoUpdate",
       workbox: {
