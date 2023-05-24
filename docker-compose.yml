@@ -51,15 +51,6 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
-  tunnel:
-    image: node:16
-    command: >
-      npx localtunnel
-      --local-host frontend 
-      -p 3000
-      -s kanben-web
-    depends_on:
-      - frontend
   hasura:
     build:
       context: .

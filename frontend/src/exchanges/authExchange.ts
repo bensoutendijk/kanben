@@ -2,7 +2,7 @@ import { auth0 } from "@/auth0";
 import { authExchange as urqlAuthExchange } from "@urql/exchange-auth";
 
 export const authExchange = urqlAuthExchange(async (utils) => {
-  const { idTokenClaims, checkSession, logout } = auth0;
+  const { idTokenClaims, checkSession, loginWithRedirect } = auth0;
 
   return {
     addAuthToOperation(operation) {
@@ -17,7 +17,7 @@ export const authExchange = urqlAuthExchange(async (utils) => {
     async refreshAuth() {
       await checkSession();
       if (!idTokenClaims.value) {
-        logout();
+        loginWithRedirect();
       }
     },
     willAuthError() {

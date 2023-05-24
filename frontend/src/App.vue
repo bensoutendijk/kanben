@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import { provideClient } from "@urql/vue";
-
 import { client } from "./client";
+
+import AppHeader from "./components/AppHeader.vue";
+import AppLayout from "./components/AppLayout.vue";
 
 provideClient(client);
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <AppHeader />
 
-  <RouterView />
+  <AppLayout>
+    <RouterView />
+  </AppLayout>
 </template>
 
 <style scoped></style>
