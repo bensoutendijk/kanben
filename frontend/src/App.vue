@@ -12,6 +12,8 @@ provideClient(client);
 <template>
   <AppHeader />
 
+  <IButton>Hello</IButton>
+
   <AppLayout>
     <RouterView />
   </AppLayout>

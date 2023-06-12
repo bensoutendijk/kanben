@@ -20,18 +20,18 @@ export default defineConfig({
       script: {
         propsDestructure: true
       }
-    }),
-    VitePWA({
-      registerType: "autoUpdate",
-      workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}"]
-      },
-      manifest: {
-        name: "Kanben",
-        short_name: "KB",
-        display: "standalone"
-      }
     })
+    // VitePWA({
+    //   registerType: "autoUpdate",
+    //   workbox: {
+    //     globPatterns: ["**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}"]
+    //   },
+    //   manifest: {
+    //     name: "Kanben",
+    //     short_name: "KB",
+    //     display: "standalone"
+    //   }
+    // })
   ],
   resolve: {
     alias: {

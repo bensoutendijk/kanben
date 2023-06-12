@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "generate": "graphql-codegen --watch",
+    "inkline": "inkline generate",
     "build": "npm run type-check && npm run build-only",
     "preview": "vite preview",
     "build-only": "vite build",
